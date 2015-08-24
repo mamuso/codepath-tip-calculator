@@ -11,16 +11,29 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var billField: UITextField!
+    @IBOutlet weak var underBillField: UILabel!
+    @IBOutlet weak var tipView: UIView!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tipLabel.text = "$0.00"
-        totalLabel.text = "$0.00"
-    }
+        
+        // Temporarilly hiding the view with all the elements
+        tipView.alpha = 0
+        
+        // Focusing on the text when the view load
+        billField.becomeFirstResponder()
+        
+        // Set the center of the billField and tipView
+        billField.center = CGPoint(x: self.billField.center.x, y: CGFloat(180))
+        underBillField.center = CGPoint(x: self.underBillField.center.x, y: CGFloat(180))
+        tipView.center = CGPoint(x: self.tipView.center.x, y: CGFloat(550))
+
+}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -36,8 +49,25 @@ class ViewController: UIViewController {
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
         
+        underBillField.text = "$\(billField.text)"
         tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        totalLabel.text = String(format: "total $%.2f", total)
+        
+        if(billField.text != "") {
+            UIView.animateWithDuration(0.25, animations: {
+                self.tipView.alpha = 1
+                self.tipView.center = CGPoint(x: self.tipView.center.x, y: CGFloat(420))
+                self.billField.center = CGPoint(x: self.billField.center.x, y: CGFloat(110))
+                self.underBillField.center = CGPoint(x: self.underBillField.center.x, y: CGFloat(110))
+            })
+        } else {
+            UIView.animateWithDuration(0.25, animations: {
+                self.tipView.alpha = 0
+                self.tipView.center = CGPoint(x: self.tipView.center.x, y: CGFloat(550))
+                self.underBillField.center = CGPoint(x: self.underBillField.center.x, y: CGFloat(180))
+                self.billField.center = CGPoint(x: self.billField.center.x, y: CGFloat(180))
+            })
+        }
     }
 
     @IBAction func onTap(sender: AnyObject) {
