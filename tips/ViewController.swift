@@ -1,4 +1,4 @@
-//
+ //
 //  ViewController.swift
 //  tips
 //
@@ -16,6 +16,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    @IBOutlet weak var tipForTwoLabel: UILabel!
+    @IBOutlet weak var totalForTwoLabel: UILabel!
+    @IBOutlet weak var tipForThreeLabel: UILabel!
+    @IBOutlet weak var totalForThreeLabel: UILabel!
+    @IBOutlet weak var tipForFourLabel: UILabel!
+    @IBOutlet weak var totalForFourLabel: UILabel!
+    
     // It should be a better way to do this (?)
     @IBOutlet weak var faceImage0: UIImageView!
     @IBOutlet weak var faceImage1: UIImageView!
@@ -57,10 +64,10 @@ class ViewController: UIViewController {
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         var backgroundColors = [
-            [UIColor(red: 157/255, green: 196/255, blue: 164/255, alpha: 1), UIColor(red: 124/255, green: 156/255, blue: 130/255, alpha: 1)],
-            [UIColor(red: 158/255, green: 199/255, blue: 87/255, alpha: 1), UIColor(red: 125/255, green: 160/255, blue: 63/255, alpha: 1)],
-            [UIColor(red: 81/255, green: 184/255, blue: 146/255, alpha: 1), UIColor(red: 60/255, green: 148/255, blue: 115/255, alpha: 1)],
-            [UIColor(red: 43/255, green: 140/255, blue: 134/255, alpha: 1), UIColor(red: 29/255, green: 112/255, blue: 107/255, alpha: 1)]
+            [UIColor(red: 157/255, green: 196/255, blue: 164/255, alpha: 1), UIColor(red: 119/255, green: 140/255, blue: 119/255, alpha: 1)],
+            [UIColor(red: 158/255, green: 199/255, blue: 87/255, alpha: 1), UIColor(red: 115/255, green: 150/255, blue: 58/255, alpha: 1)],
+            [UIColor(red: 81/255, green: 184/255, blue: 146/255, alpha: 1), UIColor(red: 81/255, green: 140/255, blue: 114/255, alpha: 1)],
+            [UIColor(red: 43/255, green: 140/255, blue: 134/255, alpha: 1), UIColor(red: 24/255, green: 97/255, blue: 92/255, alpha: 1)]
         ]
         var backgroundColor = backgroundColors[tipControl.selectedSegmentIndex][0]
         var tintColor = backgroundColors[tipControl.selectedSegmentIndex][1]
@@ -87,17 +94,27 @@ class ViewController: UIViewController {
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "total $%.2f", total)
         
+        // It should be a less spaguetti way to do this (?)
+        tipForTwoLabel.text = String(format: "$%.2f", tip/2)
+        totalForTwoLabel.text = String(format: "total $%.2f", total/2)
+
+        tipForThreeLabel.text = String(format: "$%.2f", tip/3)
+        totalForThreeLabel.text = String(format: "total $%.2f", total/3)
+
+        tipForFourLabel.text = String(format: "$%.2f", tip/4)
+        totalForFourLabel.text = String(format: "total $%.2f", total/4)
+
         if(billField.text != "") {
             UIView.animateWithDuration(0.3, animations: {
                 self.tipView.alpha = 1
                 self.tipView.center = CGPoint(x: self.tipView.center.x, y: CGFloat(420))
                 self.billField.center = CGPoint(x: self.billField.center.x, y: CGFloat(110))
                 self.underBillField.center = CGPoint(x: self.underBillField.center.x, y: CGFloat(110))
-                self.view.backgroundColor = backgroundColor
                 self.tipControl.tintColor = tintColor
                 for face in faces {
                     face.tintColor = tintColor
                 }
+                self.view.backgroundColor = backgroundColor
             })
         } else {
             UIView.animateWithDuration(0.3, animations: {
@@ -105,6 +122,7 @@ class ViewController: UIViewController {
                 self.tipView.center = CGPoint(x: self.tipView.center.x, y: CGFloat(550))
                 self.underBillField.center = CGPoint(x: self.underBillField.center.x, y: CGFloat(180))
                 self.billField.center = CGPoint(x: self.billField.center.x, y: CGFloat(180))
+                self.view.backgroundColor = UIColor(red: 210/255, green: 216/255, blue: 219/255, alpha: 1)
             })
         }
     }
